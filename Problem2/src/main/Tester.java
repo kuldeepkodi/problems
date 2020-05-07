@@ -30,8 +30,8 @@ public class Tester {
 		// CREATING A HASHMAP WITH KEY AS ITEMS AND 
 		// VALUE AS A LIST OF ORDERS CONTAINING THE ITEM
 		HashMap<String, List<Order>> map = new HashMap<>();
-		for (Order o : orders) {
-			for (String i : o.getItems()) {
+		orders.forEach(o -> {
+			o.getItems().forEach(i -> {
 				if(map.containsKey(i)) {
 					List<Order> existing = map.get(i);
 					existing.add(o);
@@ -41,8 +41,22 @@ public class Tester {
 					newList.add(o);
 					map.put(i, newList);
 				}
-			}
-		}
+			});
+		});
+		
+//		for (Order o : orders) {
+//			for (String i : o.getItems()) {
+//				if(map.containsKey(i)) {
+//					List<Order> existing = map.get(i);
+//					existing.add(o);
+//					map.put(i, existing);
+//				}else {
+//					ArrayList<Order> newList = new ArrayList<Order>();
+//					newList.add(o);
+//					map.put(i, newList);
+//				}
+//			}
+//		}
 		
 		// IDENTIFYING THE TOP 1 AND TOP 2 ITEMS BASED ON HOW MANY ORDERS CONTAIN THE ITEM
 		int max = 1, secondMax = 1;
