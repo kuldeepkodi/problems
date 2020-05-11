@@ -1,0 +1,41 @@
+1. FlightDetailsApp
+
+Maven build first and then launch the application.
+
+The application provides the following APIs:
+
+' http://localhost:9002flights/get ' -> to get all scheduled flights.
+
+' http://localhost:9002flights/get/1/status ' -> to get status of the scheduled flight with id 1 (1 is path variable).
+
+' http://localhost:9002flights/get/1/seatMatrix ' -> to get seat matrix of the scheduled flight with id 1 (1 is path variable).
+
+
+
+2. FlightBookingApp
+
+Launch the application.
+
+To Login to the application, send POST request to ' http://localhost:9003/authenticate '.
+Use { "email": "adam@test.com", "password": "Adam@123" } as request body.
+Server responds with a jwt bearer token, which should be used for all consequent requests.
+
+GET requests -
+
+' http://localhost:9003/booking/all ' -> to get all scheduled flights
+
+' http://localhost:9003/booking/all/sort?sortBy=price ' -> to get all scheduled flights, sorted by price.
+
+' http://localhost:9003/booking/all/sort?sortBy=hops ' -> to get all scheduled flights, sorted by no of hops.
+
+' http://localhost:9003/booking/sd?s=Bengaluru&d=Delhi ' -> to get all scheduled flights from Bengaluru to Delhi
+
+' http://localhost:9003/booking/sd/sort?s=Bengaluru&d=Delhi&sortBy=price ' -> to get all scheduled flights from Bengaluru to Delhi, sorted by price (or use hops).
+
+' http://localhost:9003/booking/company?company=Indigo,Air Asia ' -> to get all scheduled flights of desired companies (comma seperated values)
+
+' http://localhost:9003/booking/company?company=Indigo,Air Asia&sortBy=price ' -> to get all scheduled flights of desired companies, sorted by price (or use hops).
+
+' http://localhost:9003/booking/status/1 ' -> to get status of scheduled flight with id 1 (1 is path variable).
+
+' http://localhost:9003/booking/seats/1 ' -> to get seat matrix of scheduled flight with id 1 (1 is path variable).
