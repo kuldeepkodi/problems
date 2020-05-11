@@ -13,7 +13,7 @@ import com.infy.dao.CustomerBookingRepo;
 import com.infy.entity.Customer;
 
 @Service
-public class CustomerDetailsService implements UserDetailsService{
+public class CustomerDetailsService implements UserDetailsService {
 	
 	@Autowired
 	private CustomerBookingRepo repo;

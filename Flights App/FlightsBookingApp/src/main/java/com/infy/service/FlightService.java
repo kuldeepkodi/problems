@@ -1,12 +1,17 @@
 package com.infy.service;
 
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -22,11 +27,26 @@ public class FlightService {
 	@Autowired
 	RestTemplate restTemplate;
 	
+	public HttpEntity<String> getHttpEntity() {
+		String plainCreds = "adam@test.com:Adam@123";
+		byte[] plainCredsBytes = plainCreds.getBytes();
+		byte[] base64CredsBytes = Base64.getEncoder().encode(plainCredsBytes);
+		String base64Creds = new String(base64CredsBytes);
+		
+		HttpHeaders header = new HttpHeaders();
+		header.set("Authorization", "Basic " + base64Creds);
+		HttpEntity<String> httpEntity = new HttpEntity<String>(header);
+		return httpEntity;
+	}
+	
 	public List<FlightDTO> getAllScheduledFlights() {
 		
 		String url = environment.getProperty("flight_details") + "/get";
-		FlightDTO[] flights = restTemplate.getForObject(url, FlightDTO[].class);
-		return Arrays.asList(flights);
+		
+		HttpEntity<String> httpEntity = getHttpEntity();
+		
+		ResponseEntity<FlightDTO[]> flights = restTemplate.exchange(url, HttpMethod.GET, httpEntity, FlightDTO[].class);
+		return Arrays.asList(flights.getBody());
 		
 	}
 	
@@ -72,12 +92,17 @@ public class FlightService {
 	
 	public FlightDTO getFlightStatus(Integer flightId) {
 		String url = environment.getProperty("flight_details") + "/get/" + flightId + "/status";
-		return restTemplate.getForObject(url, FlightDTO.class);
+		
+		HttpEntity<String> httpEntity = getHttpEntity();
+		ResponseEntity<FlightDTO> flight = restTemplate.exchange(url, HttpMethod.GET, httpEntity, FlightDTO.class);
+		return flight.getBody();
 	}
 	
 	public SeatMatrixDTO getFlightSeatMatrix(Integer flightId) {
 		String url = environment.getProperty("flight_details") + "/get/" + flightId + "/seatMatrix";
-		return restTemplate.getForObject(url, SeatMatrixDTO.class);
+		HttpEntity<String> httpEntity = getHttpEntity();
+		ResponseEntity<SeatMatrixDTO> seatMatrix = restTemplate.exchange(url, HttpMethod.GET, httpEntity, SeatMatrixDTO.class);
+		return seatMatrix.getBody();
 	}
 	
 	// extras
