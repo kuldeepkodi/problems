@@ -62,19 +62,30 @@ public class Tester {
 		int max = 1, secondMax = 1;
 		String top1 = null, top2 = null;
 		
+		//		for (String item : map.keySet()) {
+//			if(map.get(item).size()>max) {
+//				max = map.get(item).size();
+//				top1 = item;
+//			}
+//		}
+//		
+//		for (String item : map.keySet()) {
+//			if(!item.equals(top1)) {
+//				if(map.get(item).size()>secondMax) {
+//					secondMax = map.get(item).size();
+//					top2 = item;
+//				}
+//			}
+//		}
+		
+		//DOING THE SAME IN ONE LOOP
 		for (String item : map.keySet()) {
 			if(map.get(item).size()>max) {
 				max = map.get(item).size();
 				top1 = item;
-			}
-		}
-		
-		for (String item : map.keySet()) {
-			if(!item.equals(top1)) {
-				if(map.get(item).size()>secondMax) {
-					secondMax = map.get(item).size();
-					top2 = item;
-				}
+			}else if(map.get(item).size()>secondMax) {
+				secondMax = map.get(item).size();
+				top2 = item;
 			}
 		}
 		
